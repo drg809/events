@@ -15,7 +15,7 @@ type User struct {
 	Password string             `bson:"password" json:"password,omitempty"`
 	Avatar   string             `bson:"avatar" json:"avatar,omitempty"`
 	Banner   string             `bson:"banner" json:"banner,omitempty"`
-	Bio      string             `bson:"banner" json:"bio,omitempty"`
+	Bio      string             `bson:"bio" json:"bio,omitempty"`
 	Location string             `bson:"location" json:"location,omitempty"`
 	Web      string             `bson:"web" json:"web,omitempty"`
 }
