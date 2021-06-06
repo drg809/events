@@ -5,8 +5,8 @@ import (
 )
 
 func EncryptPassword(pass string) (string, error) {
-	costo := 8
-	bytes, err := bcrypt.GenerateFromPassword([]byte(pass), costo)
+	cost := 8
+	bytes, err := bcrypt.GenerateFromPassword([]byte(pass), cost)
 
 	return string(bytes), err
 }
