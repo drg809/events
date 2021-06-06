@@ -9,7 +9,7 @@ import (
 )
 
 var MongoCN = ConnectDB()
-var clientOptions = options.Client().ApplyURI("mongodb+srv://dani:#xs9xQcDtGP2rwvr1@cluster0.1pxzp.mongodb.net/events?retryWrites=true&w=majority")
+var clientOptions = options.Client().ApplyURI("mongodb+srv://dani:xs9xQcDtGP2rwvr1@cluster0.1pxzp.mongodb.net/events?retryWrites=true&w=majority")
 
 func ConnectDB() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), clientOptions)
