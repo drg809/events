@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/drg809/events/models"
@@ -13,7 +12,6 @@ import (
 func InsertEvent(t models.Event) (string, bool, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
-	fmt.Println("estamos en el insert")
 
 	dbObject := MongoCN.Database("events")
 	col := dbObject.Collection("events")

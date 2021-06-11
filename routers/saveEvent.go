@@ -2,7 +2,6 @@ package routers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/drg809/events/db"
@@ -10,7 +9,6 @@ import (
 )
 
 func SaveEvent(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("estamos en el router")
 
 	var event models.Event
 	err := json.NewDecoder(r.Body).Decode(&event)
