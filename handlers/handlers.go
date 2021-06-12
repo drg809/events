@@ -14,20 +14,23 @@ import (
 func Handlers() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/signIn", middlew.CheckDB(routers.SignIn)).Methods("POST")
 	router.HandleFunc("/login", middlew.CheckDB(routers.Login)).Methods("POST")
-	router.HandleFunc("/profile", middlew.CheckDB(middlew.ValidateJWT(routers.UserProfile))).Methods("GET")
-	router.HandleFunc("/profile", middlew.CheckDB(middlew.ValidateJWT(routers.ModifyProfile))).Methods("PUT")
+
+	router.HandleFunc("/signIn", middlew.CheckDB(routers.SignIn)).Methods("POST")
+	router.HandleFunc("/users/profile", middlew.CheckDB(middlew.ValidateJWT(routers.UserProfile))).Methods("GET")
+	router.HandleFunc("/users/profile", middlew.CheckDB(middlew.ValidateJWT(routers.ModifyProfile))).Methods("PUT")
+	router.HandleFunc("/users/avatar", middlew.CheckDB(middlew.ValidateJWT(routers.UploadAvatar))).Methods("POST")
+	router.HandleFunc("/users/avatar", middlew.CheckDB(routers.GetAvatar)).Methods("GET")
+	router.HandleFunc("/users/banner", middlew.CheckDB(middlew.ValidateJWT(routers.UploadBanner))).Methods("POST")
+	router.HandleFunc("/users/banner", middlew.CheckDB(routers.GetBanner)).Methods("GET")
+
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.SaveEvent))).Methods("POST")
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.UpdateEvent))).Methods("PUT")
+	router.HandleFunc("/events/photo", middlew.CheckDB(middlew.ValidateJWT(routers.UploadEventPhoto))).Methods("POST")
+	router.HandleFunc("/events/photo", middlew.CheckDB(routers.GetEventPhoto)).Methods("GET")
 	router.HandleFunc("/events/user", middlew.CheckDB(routers.GetEventsByUserId)).Methods("GET")
 	router.HandleFunc("/events", middlew.CheckDB(routers.GetEvents)).Methods("GET")
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteEvent))).Methods("DELETE")
-
-	router.HandleFunc("/uploadAvatar", middlew.CheckDB(middlew.ValidateJWT(routers.UploadAvatar))).Methods("POST")
-	router.HandleFunc("/getAvatar", middlew.CheckDB(routers.GetAvatar)).Methods("GET")
-	router.HandleFunc("/uploadBanner", middlew.CheckDB(middlew.ValidateJWT(routers.UploadBanner))).Methods("POST")
-	router.HandleFunc("/getBanner", middlew.CheckDB(routers.GetBanner)).Methods("GET")
 
 	router.HandleFunc("/participations", middlew.CheckDB(middlew.ValidateJWT(routers.Participate))).Methods("POST")
 

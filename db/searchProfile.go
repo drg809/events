@@ -25,7 +25,6 @@ func SearchProfile(ID string) (models.User, error) {
 	}
 
 	err := col.FindOne(ctx, condition).Decode(&profile)
-	profile.Password = ""
 	if err != nil {
 		fmt.Println("Pegistro no encotrado " + err.Error())
 		return profile, err

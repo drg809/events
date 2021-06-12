@@ -14,7 +14,7 @@ func UploadAvatar(w http.ResponseWriter, r *http.Request) {
 
 	file, handler, err := r.FormFile("avatar")
 	if err != nil {
-		http.Error(w, "Debe enviar un avaar ! "+err.Error(), http.StatusBadRequest)
+		http.Error(w, "Debe enviar un avatar ! "+err.Error(), http.StatusBadRequest)
 		return
 	}
 	var extension = strings.Split(handler.Filename, ".")[1]
