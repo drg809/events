@@ -24,9 +24,11 @@ func Handlers() {
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteEvent))).Methods("DELETE")
 
 	router.HandleFunc("/uploadAvatar", middlew.CheckDB(middlew.ValidateJWT(routers.UploadAvatar))).Methods("POST")
-	router.HandleFunc("/getAvatar", middlew.CheckDB(middlew.ValidateJWT(routers.GetAvatar))).Methods("GET")
+	router.HandleFunc("/getAvatar", middlew.CheckDB(routers.GetAvatar)).Methods("GET")
 	router.HandleFunc("/uploadBanner", middlew.CheckDB(middlew.ValidateJWT(routers.UploadBanner))).Methods("POST")
-	router.HandleFunc("/getBanner", middlew.CheckDB(middlew.ValidateJWT(routers.GetBanner))).Methods("GET")
+	router.HandleFunc("/getBanner", middlew.CheckDB(routers.GetBanner)).Methods("GET")
+
+	router.HandleFunc("/participations", middlew.CheckDB(middlew.ValidateJWT(routers.Participate))).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
