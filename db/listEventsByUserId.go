@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ListEvents(page int64) ([]*models.GetEvents, bool) {
+func ListEventsByUserId(ID string, page int64) ([]*models.GetEvents, bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
@@ -19,7 +19,9 @@ func ListEvents(page int64) ([]*models.GetEvents, bool) {
 
 	var results []*models.GetEvents
 
-	condition := bson.M{}
+	condition := bson.M{
+		"userId": ID,
+	}
 
 	config := options.Find()
 	config.SetLimit(20)

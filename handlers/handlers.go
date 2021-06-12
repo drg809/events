@@ -18,9 +18,10 @@ func Handlers() {
 	router.HandleFunc("/login", middlew.CheckDB(routers.Login)).Methods("POST")
 	router.HandleFunc("/profile", middlew.CheckDB(middlew.ValidateJWT(routers.UserProfile))).Methods("GET")
 	router.HandleFunc("/profile", middlew.CheckDB(middlew.ValidateJWT(routers.ModifyProfile))).Methods("PUT")
-	router.HandleFunc("/event", middlew.CheckDB(middlew.ValidateJWT(routers.SaveEvent))).Methods("POST")
-	router.HandleFunc("/event", middlew.CheckDB(middlew.ValidateJWT(routers.GetEvents))).Methods("GET")
-	router.HandleFunc("/event", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteEvent))).Methods("DELETE")
+	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.SaveEvent))).Methods("POST")
+	router.HandleFunc("/events/user", middlew.CheckDB(routers.GetEventsByUserId)).Methods("GET")
+	router.HandleFunc("/events", middlew.CheckDB(routers.GetEvents)).Methods("GET")
+	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteEvent))).Methods("DELETE")
 
 	router.HandleFunc("/uploadAvatar", middlew.CheckDB(middlew.ValidateJWT(routers.UploadAvatar))).Methods("POST")
 	router.HandleFunc("/getAvatar", middlew.CheckDB(middlew.ValidateJWT(routers.GetAvatar))).Methods("GET")

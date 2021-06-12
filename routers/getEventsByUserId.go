@@ -8,7 +8,13 @@ import (
 	"github.com/drg809/events/db"
 )
 
-func GetEvents(w http.ResponseWriter, r *http.Request) {
+func GetEventsByUserId(w http.ResponseWriter, r *http.Request) {
+
+	ID := r.URL.Query().Get("id")
+	if len(ID) < 1 {
+		http.Error(w, "Debe enviar el parámetro id", http.StatusBadRequest)
+		return
+	}
 
 	if len(r.URL.Query().Get("page")) < 1 {
 		http.Error(w, "Debe enviar el parámetro página", http.StatusBadRequest)
@@ -22,7 +28,7 @@ func GetEvents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pag := int64(page)
-	response, result := db.ListEvents(pag)
+	response, result := db.ListEventsByUserId(ID, pag)
 	if !result {
 		http.Error(w, "Error al leer los tweets", http.StatusBadRequest)
 		return
