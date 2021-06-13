@@ -24,7 +24,7 @@ func GetEvents(w http.ResponseWriter, r *http.Request) {
 	pag := int64(page)
 	response, result := db.ListEvents(pag)
 	if !result {
-		http.Error(w, "Error al leer los tweets", http.StatusBadRequest)
+		http.Error(w, "Error al leer los eventos", http.StatusBadRequest)
 		return
 	}
 
