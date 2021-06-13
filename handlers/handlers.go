@@ -33,6 +33,7 @@ func Handlers() {
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteEvent))).Methods("DELETE")
 
 	router.HandleFunc("/participations", middlew.CheckDB(middlew.ValidateJWT(routers.Participate))).Methods("POST")
+	router.HandleFunc("/participations", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteParticipation))).Methods("DELETE")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
