@@ -23,6 +23,8 @@ func Handlers() {
 	router.HandleFunc("/users/avatar", middlew.CheckDB(routers.GetAvatar)).Methods("GET")
 	router.HandleFunc("/users/banner", middlew.CheckDB(middlew.ValidateJWT(routers.UploadBanner))).Methods("POST")
 	router.HandleFunc("/users/banner", middlew.CheckDB(routers.GetBanner)).Methods("GET")
+	router.HandleFunc("/users/follow", middlew.CheckDB(routers.Follow)).Methods("POST")
+	router.HandleFunc("/users/unfollow", middlew.CheckDB(routers.DeleteFollow)).Methods("DELETE")
 
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.SaveEvent))).Methods("POST")
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.UpdateEvent))).Methods("PUT")
