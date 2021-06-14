@@ -17,6 +17,7 @@ func Handlers() {
 	router.HandleFunc("/login", middlew.CheckDB(routers.Login)).Methods("POST")
 
 	router.HandleFunc("/signIn", middlew.CheckDB(routers.SignIn)).Methods("POST")
+	router.HandleFunc("/users", middlew.CheckDB(middlew.ValidateJWT(routers.GetUsers))).Methods("GET")
 	router.HandleFunc("/users/profile", middlew.CheckDB(middlew.ValidateJWT(routers.UserProfile))).Methods("GET")
 	router.HandleFunc("/users/profile", middlew.CheckDB(middlew.ValidateJWT(routers.ModifyProfile))).Methods("PUT")
 	router.HandleFunc("/users/avatar", middlew.CheckDB(middlew.ValidateJWT(routers.UploadAvatar))).Methods("POST")

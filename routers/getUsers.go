@@ -8,7 +8,7 @@ import (
 	"github.com/drg809/events/db"
 )
 
-func ListUsers(w http.ResponseWriter, r *http.Request) {
+func GetUsers(w http.ResponseWriter, r *http.Request) {
 
 	//typeUser := r.URL.Query().Get("type")
 	page := r.URL.Query().Get("page")
