@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ListUsers(page int64) ([]*models.ListUsers, bool) {
+func ListUsers(page int64, search string) ([]*models.ListUsers, bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
@@ -19,13 +19,15 @@ func ListUsers(page int64) ([]*models.ListUsers, bool) {
 
 	var results []*models.ListUsers
 
-	condition := bson.M{}
-
 	config := options.Find()
 	config.SetLimit(20)
 	config.SetSkip((page - 1) * 20)
 
-	cursor, err := col.Find(ctx, condition, config)
+	query := bson.M{
+		"name": bson.M{"$regex": `($i)` + search},
+	}
+
+	cursor, err := col.Find(ctx, query, config)
 	if err != nil {
 		log.Fatal(err.Error())
 		return results, false
