@@ -24,7 +24,7 @@ func ListParticipations(ID string, page int64, search string, tipo string) ([]*m
 	findOptions.SetLimit(20)
 
 	query := bson.M{
-		"name": bson.M{"$regex": `($i)` + search},
+		//"name": bson.M{"$regex": `($i)` + search},
 	}
 
 	cur, err := col.Find(ctx, query, findOptions)
