@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ListEvents(page int64) ([]*models.GetEvents, bool) {
+func ListEvents(ID string, page int64) ([]*models.GetEvents, bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
@@ -19,11 +19,12 @@ func ListEvents(page int64) ([]*models.GetEvents, bool) {
 
 	var results []*models.GetEvents
 
-	condition := bson.M{}
+	condition := bson.M{
+		"userId": bson.M{"$ne": ID},
+	}
 
 	config := options.Find()
 	config.SetLimit(20)
-	config.SetSort(bson.D{{Key: "date", Value: -1}})
 	config.SetSkip((page - 1) * 20)
 
 	cursor, err := col.Find(ctx, condition, config)
