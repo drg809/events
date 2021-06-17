@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -36,6 +37,7 @@ func ListEvents(ID string, page int64) ([]*models.GetEvents, bool) {
 	for cursor.Next(context.TODO()) {
 		var entry models.GetEvents
 		err := cursor.Decode(&entry)
+		fmt.Println(err)
 		if err != nil {
 			return results, false
 		}

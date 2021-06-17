@@ -24,7 +24,7 @@ func ListUsers(page int64, search string) ([]*models.ListUsers, bool) {
 	config.SetSkip((page - 1) * 20)
 
 	query := bson.M{
-		"name": bson.M{"$regex": `($i)` + search},
+		//"name": bson.M{"$regex": `($i)` + search},
 	}
 
 	cursor, err := col.Find(ctx, query, config)
@@ -42,5 +42,4 @@ func ListUsers(page int64, search string) ([]*models.ListUsers, bool) {
 		results = append(results, &entry)
 	}
 	return results, true
-
 }
