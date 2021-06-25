@@ -35,7 +35,7 @@ func UploadBanner(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	var status bool
 
-	user.Avatar = userID + "." + extension
+	user.Banner = userID + "." + extension
 	status, err = db.ModifyEntry(user, userID)
 	if err != nil || !status {
 		http.Error(w, "Error al copiar la imagen ! "+err.Error(), http.StatusBadRequest)
