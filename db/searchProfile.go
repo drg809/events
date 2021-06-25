@@ -10,14 +10,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func SearchProfile(ID string) (models.User, error) {
+func SearchProfile(ID string) (models.ListUsers, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 	defer cancel()
 
 	dbObject := MongoCN.Database("events")
 	col := dbObject.Collection("users")
 
-	var profile models.User
+	var profile models.ListUsers
 	objID, _ := primitive.ObjectIDFromHex(ID)
 
 	condition := bson.M{

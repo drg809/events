@@ -10,4 +10,5 @@ type ListUsers struct {
 	Surname string             `bson:"surname" json:"surname,omitempty"`
 	Email   string             `bson:"email" json:"email"`
 	Avatar  string             `bson:"avatar" json:"avatar,omitempty"`
+	Banner  string             `bson:"banner" json:"banner,omitempty"`
 }
