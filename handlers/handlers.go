@@ -28,6 +28,7 @@ func Handlers() {
 	router.HandleFunc("/users/follow", middlew.CheckDB(middlew.ValidateJWT(routers.Follow))).Methods("POST")
 	router.HandleFunc("/users/unfollow", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteFollow))).Methods("DELETE")
 
+	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.GetEvent))).Methods("GET")
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.SaveEvent))).Methods("POST")
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.UpdateEvent))).Methods("PUT")
 	router.HandleFunc("/events/photo", middlew.CheckDB(middlew.ValidateJWT(routers.UploadEventPhoto))).Methods("POST")
