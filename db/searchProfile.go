@@ -26,7 +26,7 @@ func SearchProfile(ID string) (models.ListProfile, error) {
 
 	err := col.FindOne(ctx, condition).Decode(&profile)
 	if err != nil {
-		fmt.Println("Pegistro no encotrado " + err.Error())
+		fmt.Println("Registro no encotrado " + err.Error())
 		return profile, err
 	}
 
