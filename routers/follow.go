@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/drg809/events/db"
@@ -9,18 +8,12 @@ import (
 )
 
 func Follow(w http.ResponseWriter, r *http.Request) {
-	ID := r.URL.Query().Get("ID")
+	ID := r.URL.Query().Get("id")
 	if len(ID) < 1 {
 		http.Error(w, "Debe enviar el parámetro ID", http.StatusBadRequest)
 		return
 	}
 	var t models.Follow
-
-	err := json.NewDecoder(r.Body).Decode(&t)
-	if err != nil {
-		http.Error(w, "Datos incorrectos "+err.Error(), http.StatusBadRequest)
-		return
-	}
 
 	t.UserID = userID
 	t.UserFollowID = ID
