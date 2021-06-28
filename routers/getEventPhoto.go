@@ -16,9 +16,9 @@ func GetEventPhoto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	event, err := db.GetEventsById(ID)
+	event, err := db.GetEvent(ID)
 	if err != nil {
-		http.Error(w, "Usuario no encontrado", http.StatusBadRequest)
+		http.Error(w, "Imagen no encontrada", http.StatusBadRequest)
 		return
 	}
 

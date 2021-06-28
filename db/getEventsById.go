@@ -2,30 +2,34 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/drg809/events/models"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func GetEventsById(ID string) (*models.GetEvents, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 	defer cancel()
 
-	dbObj := MongoCN.Database("events")
-	col := dbObj.Collection("events")
+	dbObject := MongoCN.Database("events")
+	col := dbObject.Collection("events")
 
-	var result *models.GetEvents
+	var event *models.GetEvents
+	objID, _ := primitive.ObjectIDFromHex(ID)
 
 	condition := bson.M{
-		"_id": ID,
+		"_id": objID,
 	}
 
-	err := col.FindOne(ctx, condition).Decode(&result)
+	err := col.FindOne(ctx, condition).Decode(&event)
 	if err != nil {
-		return result, err
+		fmt.Println("Registro no encotrado " + err.Error())
+		return event, err
 	}
 
-	return result, nil
+	return event, nil
 
 }

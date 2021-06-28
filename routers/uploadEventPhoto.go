@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -42,6 +43,8 @@ func UploadEventPhoto(w http.ResponseWriter, r *http.Request) {
 
 	event.Photo = eventID + "." + extension
 	status, err = db.UpdateEvent(event, eventID)
+	fmt.Println(status)
+	fmt.Println(event.Photo)
 	if err != nil || !status {
 		http.Error(w, "Error al actualizar el evento ! "+err.Error(), http.StatusBadRequest)
 		return

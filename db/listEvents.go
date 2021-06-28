@@ -24,9 +24,9 @@ func ListEvents(ID string, page int64) ([]*models.GetEvents, bool) {
 	}
 
 	config := options.Find()
-	config.SetLimit(20)
+	config.SetLimit(10)
 	config.SetSort(bson.D{{Key: "date", Value: -1}})
-	config.SetSkip((page - 1) * 20)
+	config.SetSkip((page - 1) * 10)
 
 	cursor, err := col.Find(ctx, condition, config)
 	if err != nil {

@@ -2,6 +2,7 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -22,6 +23,7 @@ func GetEvents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pag := int64(page)
+	fmt.Println(page)
 	response, result := db.ListEvents(userID, pag)
 	if !result {
 		http.Error(w, "Error al leer los eventos", http.StatusBadRequest)
