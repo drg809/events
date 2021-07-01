@@ -10,7 +10,7 @@ import (
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 
-	//typeUser := r.URL.Query().Get("type")
+	typeUser := r.URL.Query().Get("type")
 	page := r.URL.Query().Get("page")
 	search := r.URL.Query().Get("search")
 
@@ -22,7 +22,7 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 
 	pag := int64(pagTemp)
 
-	result, status := db.ListUsers(pag, search)
+	result, status := db.ListUsers(userID, pag, search, typeUser)
 	if !status {
 		http.Error(w, "Error al leer los usuarios", http.StatusBadRequest)
 		return
