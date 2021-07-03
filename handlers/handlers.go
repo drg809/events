@@ -35,6 +35,7 @@ func Handlers() {
 	router.HandleFunc("/events/user", middlew.CheckDB(routers.GetEventsByUserId)).Methods("GET")
 	router.HandleFunc("/events", middlew.CheckDB(routers.GetEvents)).Methods("GET")
 	router.HandleFunc("/events/info", middlew.CheckDB(middlew.ValidateJWT(routers.GetEvent))).Methods("GET")
+	router.HandleFunc("/events/follow", middlew.CheckDB(middlew.ValidateJWT(routers.GetEventsFollowers))).Methods("GET")
 	router.HandleFunc("/events", middlew.CheckDB(middlew.ValidateJWT(routers.DeleteEvent))).Methods("DELETE")
 
 	router.HandleFunc("/participations", middlew.CheckDB(middlew.ValidateJWT(routers.Participate))).Methods("POST")
