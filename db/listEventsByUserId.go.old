@@ -26,7 +26,7 @@ func ListEventsByUserId(ID string, page int) ([]models.ListEventsUser, bool) {
 		"$lookup": bson.M{
 			"from":         "users",
 			"localField":   "userId",
-			"foreingField": "_id",
+			"foreignField": "_id",
 			"as":           "user",
 		},
 	})

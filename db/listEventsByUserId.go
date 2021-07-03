@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -38,6 +39,7 @@ func ListEventsByUserId(ID string, page int64) ([]*models.GetEvents, bool) {
 		var entry models.GetEvents
 		err := cursor.Decode(&entry)
 		if err != nil {
+			fmt.Println("error")
 			return results, false
 		}
 		results = append(results, &entry)
