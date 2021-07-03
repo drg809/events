@@ -10,7 +10,7 @@ type ListEventsFollowers struct {
 	ID           primitive.ObjectID `bson:"_id" json:"_id,omitempty"`
 	UserId       string             `bson:"userId" json:"userId,omitempty"`
 	UserFollowId string             `bson:"userFollowId" json:"userFollowId,omitempty"`
-	Events       struct {
+	Event        struct {
 		Name   string    `bson:"name" json:"name,omitempty"`
 		Detail string    `bson:"detail" json:"detail,omitempty"`
 		Date   time.Time `bson:"date" json:"date"`

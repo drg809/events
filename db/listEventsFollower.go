@@ -23,7 +23,7 @@ func ListEventsFollowers(ID string, pagina int) ([]models.ListEventsFollowers, b
 	conditions = append(conditions, bson.M{
 		"$lookup": bson.M{
 			"from":         "events",
-			"localField":   "UserFollowId",
+			"localField":   "userFollowId",
 			"foreignField": "userId",
 			"as":           "event",
 		}})
@@ -32,9 +32,9 @@ func ListEventsFollowers(ID string, pagina int) ([]models.ListEventsFollowers, b
 	conditions = append(conditions, bson.M{"$skip": skip})
 	conditions = append(conditions, bson.M{"$limit": 10})
 
-	cursor, err := col.Aggregate(ctx, conditions)
+	cursor, _ := col.Aggregate(ctx, conditions)
 	var result []models.ListEventsFollowers
-	err = cursor.All(ctx, &result)
+	err := cursor.All(ctx, &result)
 	if err != nil {
 		fmt.Println("error")
 		return result, false

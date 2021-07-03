@@ -12,7 +12,7 @@ type ListEventsUser struct {
 	Surname string             `bson:"surname" json:"surname,omitempty"`
 	Avatar  string             `bson:"avatar" json:"avatar,omitempty"`
 
-	Events struct {
+	Event struct {
 		Name   string    `bson:"name" json:"name,omitempty"`
 		Detail string    `bson:"detail" json:"detail,omitempty"`
 		Date   time.Time `bson:"date" json:"date"`
