@@ -27,9 +27,9 @@ func GetEventsByUserId(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, result := db.ListEventsByUserId(ID, int64(page))
+	response, result := db.ListEventsByUserId(ID, page)
 	if !result {
-		http.Error(w, "Error al leer los eventosu", http.StatusBadRequest)
+		http.Error(w, "Error al leer los eventos", http.StatusBadRequest)
 		return
 	}
 

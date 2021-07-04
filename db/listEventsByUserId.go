@@ -3,47 +3,46 @@ package db
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/drg809/events/models"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func ListEventsByUserId(ID string, page int64) ([]*models.GetEvents, bool) {
+func ListEventsByUserId(ID string, page int) ([]models.ListEventsUser, bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	dbObj := MongoCN.Database("events")
-	col := dbObj.Collection("events")
+	col := dbObj.Collection("users")
 
-	var results []*models.GetEvents
+	skip := (page - 1) * 10
+	objID, _ := primitive.ObjectIDFromHex(ID)
 
-	condition := bson.M{
-		"userId": ID,
-	}
+	conditions := make([]bson.M, 0)
+	conditions = append(conditions, bson.M{"$match": bson.M{"_id": objID}})
 
-	config := options.Find()
-	config.SetLimit(10)
-	config.SetSort(bson.D{{Key: "date", Value: -1}})
-	config.SetSkip((page - 1) * 10)
+	conditions = append(conditions, bson.M{
+		"$lookup": bson.M{
+			"from":         "events",
+			"localField":   "_id",
+			"foreignField": "userId",
+			"as":           "event",
+		},
+	})
+	// conditions = append(conditions, bson.M{"$unwind": "$event"})
+	// conditions = append(conditions, bson.M{"$sort": bson.M{"event.date": -1}})
+	conditions = append(conditions, bson.M{"$skip": skip})
+	conditions = append(conditions, bson.M{"$limit": 10})
 
-	cursor, err := col.Find(ctx, condition, config)
+	var result []models.ListEventsUser
+	cursor, _ := col.Aggregate(ctx, conditions)
+	fmt.Println(cursor)
+	err := cursor.All(ctx, &result)
 	if err != nil {
-		log.Fatal(err.Error())
-		return results, false
+		return result, false
 	}
-
-	for cursor.Next(context.TODO()) {
-		var entry models.GetEvents
-		err := cursor.Decode(&entry)
-		if err != nil {
-			fmt.Println("error")
-			return results, false
-		}
-		results = append(results, &entry)
-	}
-	return results, true
+	return result, true
 
 }
