@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/drg809/events/models"
@@ -22,23 +21,20 @@ func ListEventsByUserId(ID string, page int) ([]models.ListEventsUser, bool) {
 
 	conditions := make([]bson.M, 0)
 	conditions = append(conditions, bson.M{"$match": bson.M{"_id": objID}})
-
 	conditions = append(conditions, bson.M{
 		"$lookup": bson.M{
 			"from":         "events",
 			"localField":   "_id",
 			"foreignField": "userId",
 			"as":           "event",
-		},
-	})
-	// conditions = append(conditions, bson.M{"$unwind": "$event"})
-	// conditions = append(conditions, bson.M{"$sort": bson.M{"event.date": -1}})
+		}})
+	conditions = append(conditions, bson.M{"$unwind": "$event"})
+	conditions = append(conditions, bson.M{"$sort": bson.M{"event.date": -1}})
 	conditions = append(conditions, bson.M{"$skip": skip})
 	conditions = append(conditions, bson.M{"$limit": 10})
 
-	var result []models.ListEventsUser
 	cursor, _ := col.Aggregate(ctx, conditions)
-	fmt.Println(cursor)
+	var result []models.ListEventsUser
 	err := cursor.All(ctx, &result)
 	if err != nil {
 		return result, false

@@ -11,8 +11,7 @@ type ListEventsUser struct {
 	Name    string             `bson:"name" json:"name,omitempty"`
 	Surname string             `bson:"surname" json:"surname,omitempty"`
 	Avatar  string             `bson:"avatar" json:"avatar,omitempty"`
-
-	Event struct {
+	Event   struct {
 		ID     primitive.ObjectID `bson:"_id" json:"_id,omitempty"`
 		Name   string             `bson:"name" json:"name,omitempty"`
 		Detail string             `bson:"detail" json:"detail,omitempty"`

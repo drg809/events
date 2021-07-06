@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/drg809/events/models"
@@ -36,7 +35,6 @@ func ListEventsFollowers(ID string, pagina int) ([]models.ListEventsFollowers, b
 	var result []models.ListEventsFollowers
 	err := cursor.All(ctx, &result)
 	if err != nil {
-		fmt.Println("error")
 		return result, false
 	}
 	return result, true
