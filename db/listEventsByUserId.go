@@ -21,10 +21,11 @@ func ListEventsByUserId(ID string, page int) ([]models.ListEventsUser, bool) {
 
 	conditions := make([]bson.M, 0)
 	conditions = append(conditions, bson.M{"$match": bson.M{"_id": objID}})
+	conditions = append(conditions, bson.M{"$addFields": bson.M{"objId": bson.M{"$toString": "$_id"}}})
 	conditions = append(conditions, bson.M{
 		"$lookup": bson.M{
 			"from":         "events",
-			"localField":   "_id",
+			"localField":   "objId",
 			"foreignField": "userId",
 			"as":           "event",
 		}})
