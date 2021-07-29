@@ -1,0 +1,41 @@
+package db
+
+import (
+	"context"
+	"time"
+
+	"github.com/drg809/events/models"
+	"go.mongodb.org/mongo-driver/bson"
+)
+
+func GetEventParticipations(ID string) ([]models.ListEventsFollowers, bool) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	dbObj := MongoCN.Database("events")
+	col := dbObj.Collection("follows")
+
+	skip := 0
+
+	conditions := make([]bson.M, 0)
+	conditions = append(conditions, bson.M{"$match": bson.M{"userId": ID}})
+	conditions = append(conditions, bson.M{
+		"$lookup": bson.M{
+			"from":         "events",
+			"localField":   "userFollowId",
+			"foreignField": "userId",
+			"as":           "event",
+		}})
+	conditions = append(conditions, bson.M{"$unwind": "$event"})
+	conditions = append(conditions, bson.M{"$sort": bson.M{"event.date": -1}})
+	conditions = append(conditions, bson.M{"$skip": skip})
+	conditions = append(conditions, bson.M{"$limit": 10})
+
+	cursor, _ := col.Aggregate(ctx, conditions)
+	var result []models.ListEventsFollowers
+	err := cursor.All(ctx, &result)
+	if err != nil {
+		return result, false
+	}
+	return result, true
+}
