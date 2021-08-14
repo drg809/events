@@ -25,7 +25,12 @@ func CheckParticipation(w http.ResponseWriter, r *http.Request) {
 	if err != nil || !status {
 		resp.Status = false
 	} else {
-		resp.Status = true
+		valid, _ := db.CheckTotalParticipants(t)
+		if valid {
+			resp.Status = true
+		} else {
+			resp.Status = false
+		}
 	}
 
 	w.Header().Set("Content-Type", "application/json")

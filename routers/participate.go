@@ -25,6 +25,12 @@ func Participate(w http.ResponseWriter, r *http.Request) {
 	t.UserID = userID
 	t.EventID = eventID
 
+	valid, text := db.CheckTotalParticipants(t)
+	if !valid {
+		http.Error(w, text, http.StatusBadRequest)
+		return
+	}
+
 	status, err := db.InsertParticipation(t)
 	if err != nil {
 		http.Error(w, "Ocurrió un error al inscribir al usuario al evento "+err.Error(), http.StatusBadRequest)
