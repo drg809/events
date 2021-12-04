@@ -1,4 +1,4 @@
-package routers
+package jwt
 
 import (
 	"errors"
@@ -10,7 +10,7 @@ import (
 )
 
 var Email string
-var userID string
+var UserID string
 
 func ProcessToken(tk string) (*models.Claim, bool, string, error) {
 	myKey := []byte("MasterdelDesarrollo_grupodeFacebook")
@@ -29,9 +29,9 @@ func ProcessToken(tk string) (*models.Claim, bool, string, error) {
 		_, exist, _ := db.CheckUserExist(claims.Email)
 		if exist {
 			Email = claims.Email
-			userID = claims.ID.Hex()
+			UserID = claims.ID.Hex()
 		}
-		return claims, exist, userID, nil
+		return claims, exist, UserID, nil
 	}
 	if !tkn.Valid {
 		return claims, false, string(""), errors.New("token no válido")

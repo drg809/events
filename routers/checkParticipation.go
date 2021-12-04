@@ -17,7 +17,7 @@ func CheckParticipation(w http.ResponseWriter, r *http.Request) {
 
 	var t models.Participation
 	t.EventID = eventID
-	t.UserID = userID
+	t.UserID = UserID
 
 	var resp models.CheckParticipation
 

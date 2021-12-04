@@ -18,7 +18,7 @@ func SaveEvent(w http.ResponseWriter, r *http.Request) {
 	}
 
 	entry := models.Event{
-		UserID: userID,
+		UserID: UserID,
 		Name:   event.Name,
 		Detail: event.Detail,
 		Date:   event.Date,

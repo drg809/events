@@ -18,7 +18,7 @@ func UploadBanner(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var extension = strings.Split(handler.Filename, ".")[1]
-	var path string = "uploads/banners/" + userID + "." + extension
+	var path string = "uploads/banners/" + UserID + "." + extension
 
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
@@ -35,8 +35,8 @@ func UploadBanner(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	var status bool
 
-	user.Banner = userID + "." + extension
-	status, err = db.ModifyEntry(user, userID)
+	user.Banner = UserID + "." + extension
+	status, err = db.ModifyEntry(user, UserID)
 	if err != nil || !status {
 		http.Error(w, "Error al copiar la imagen ! "+err.Error(), http.StatusBadRequest)
 		return

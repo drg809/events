@@ -20,7 +20,7 @@ func GetEventsFollowers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, status := db.ListEventsFollowers(userID, page)
+	resp, status := db.ListEventsFollowers(UserID, page)
 	if !status {
 		http.Error(w, "Error al leer los eventos", http.StatusBadRequest)
 		return

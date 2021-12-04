@@ -17,7 +17,7 @@ func CheckFollow(w http.ResponseWriter, r *http.Request) {
 
 	var t models.Follow
 	t.UserFollowID = ID
-	t.UserID = userID
+	t.UserID = UserID
 
 	var resp models.CheckParticipation
 

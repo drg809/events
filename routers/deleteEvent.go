@@ -13,7 +13,7 @@ func DeleteEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := db.DeleteEvent(ID, userID)
+	err := db.DeleteEvent(ID, UserID)
 	if err != nil {
 		http.Error(w, "Ocurrió un error al intentar borrar el evento "+err.Error(), http.StatusBadRequest)
 		return

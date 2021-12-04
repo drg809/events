@@ -16,14 +16,14 @@ func UpdateEvent(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Datos incorrectos "+err.Error(), 400)
 		return
 	}
-	if t.UserID != userID {
+	if t.UserID != UserID {
 		http.Error(w, "No puede borrar un evento que no es suyo, el incidente será reportado."+err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	var status bool
 
-	status, err = db.UpdateEvent(t, userID)
+	status, err = db.UpdateEvent(t, UserID)
 	if err != nil {
 		http.Error(w, "Ocurrió un error al intentar modificar el registro. Reintente nuevamente "+err.Error(), 400)
 		return

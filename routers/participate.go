@@ -22,7 +22,7 @@ func Participate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t.UserID = userID
+	t.UserID = UserID
 	t.EventID = eventID
 
 	valid, text := db.CheckTotalParticipants(t)

@@ -1,11 +1,12 @@
-package routers
+package controllers
 
 import (
 	"encoding/json"
 	"net/http"
 	"strconv"
 
-	"github.com/drg809/events/db"
+	"github.com/drg809/events/jwt"
+	"github.com/drg809/events/models/user"
 )
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
@@ -19,16 +20,19 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Debe enviar el parámetro página como entero mayor a 0", http.StatusBadRequest)
 		return
 	}
-
 	pag := int64(pagTemp)
 
-	result, status := db.ListUsers(UserID, pag, search, typeUser)
-	if !status {
-		http.Error(w, "Error al leer los usuarios", http.StatusBadRequest)
+	userList, err := user.GetUsers(jwt.UserID, pag, search, typeUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	SendOKHttp(w, userList)
+}
+
+func SendOKHttp(w http.ResponseWriter, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(result)
-
+	json.NewEncoder(w).Encode(data)
 }

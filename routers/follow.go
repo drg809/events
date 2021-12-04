@@ -15,7 +15,7 @@ func Follow(w http.ResponseWriter, r *http.Request) {
 	}
 	var t models.Follow
 
-	t.UserID = userID
+	t.UserID = UserID
 	t.UserFollowID = ID
 
 	status, err := db.InsertFollow(t)
